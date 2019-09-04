@@ -1,0 +1,11 @@
+[Unit]
+Description=Enable RTC-PCF85063
+
+[Service]
+User=1000
+ExecStart=/bin/bash -c 'echo pcf85063 0x51 | sudo tee /sys/class/i2c-adapter/i2c-1/new_device'
+Restart=on-failure
+StartLimitInterval=60
+
+[Install]
+WantedBy=multi-user.target
