@@ -12,7 +12,7 @@ This repository provides a Makefile which downloads, builds and installs the RTC
 3. <code>cd raspbee2-rtc</code>
 4. <code>make</code>
 5. <code>sudo make install</code>
-6. Reboot
+6. reboot
 
 ## Troubelshooting
 If something went wrong during install please consider following error sources:
