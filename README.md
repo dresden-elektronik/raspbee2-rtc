@@ -30,7 +30,7 @@ If something went wrong during install please consider following error sources:
  Read the RTC time:
  \
    <code>sudo hwclock</code>
-\
+
 
  For more information see: https://linux.die.net/man/8/hwclock
    
