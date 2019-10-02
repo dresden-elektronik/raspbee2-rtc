@@ -27,6 +27,6 @@ If something went wrong during install please consider following error sources:
    <code>sudo hwclock</code>
 
 ## Dependecies
-Hardware:
-RPI1 (Revision 2 or greater), RPI2, RPI3, RPI4
+Hardware: \
+RPI1 (Revision 2 or greater), RPI2, RPI3, RPI4 \
 RaspBee II Zigbee shield
