@@ -12,6 +12,7 @@ This repository provides a Makefile which downloads, builds and installs the RTC
 3. <code>cd raspbee2-rtc</code>
 4. <code>make</code>
 5. <code>sudo make install</code>
+6. Reboot
 
 ## Troubelshooting
 If something went wrong during install please consider following error sources:
@@ -21,11 +22,18 @@ If something went wrong during install please consider following error sources:
 - execute make install with sudo
 - if behind a proxy make sure it is correctly configured
  
- ## Testing
- Test if the RTC works correctly:
+ ## Use the RTC
+ Set RTC time to system time:
+ \
+   <code>sudo hwclock --systohc</code>
+
+ Read the RTC time:
  \
    <code>sudo hwclock</code>
+\
 
+ For more information see: https://linux.die.net/man/8/hwclock
+   
 ## Dependecies
 Hardware: \
 RPI1 (Revision 2 or greater), RPI2, RPI3, RPI4 \
