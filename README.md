@@ -7,6 +7,7 @@ This repository provides a Makefile which downloads, builds and installs the RTC
 
 1. install dependencies
 \
+  <code> sudo apt update </code> \
   <code> sudo apt install i2c-tools build-essential raspberrypi-kernel-headers </code>
 2. clone or download this repository
 3. <code>cd raspbee2-rtc</code>
