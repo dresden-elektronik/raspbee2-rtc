@@ -36,20 +36,7 @@ install:
 	@echo "enabling rtc module..."
 	@echo "rtc_pcf85063" | sudo tee /usr/lib/modules-load.d/rtc_pcf85063.conf
 	@echo "enabling i2c interface..."
-	@if [ ! -z "$$(cat /boot/config.txt | grep "^#dtparam=i2c_arm=on")" ]; then \
-		sed -i 's/#dtparam=i2c_arm=on/dtparam=i2c_arm=on/g' /boot/config.txt; \
-	elif [ ! -z "$$(cat /boot/config.txt | grep "^dtparam=i2c_arm=on" | xargs)" ]; then \
-		:; \
-	else \
-		echo "" | sudo tee -a /boot/config.txt; \
-		echo "#enable i2c" | sudo tee -a /boot/config.txt; \
-		echo "dtparam=i2c_arm=on" | sudo tee -a /boot/config.txt; \
-	fi
-
-	@echo "downloading rtc service..."
-	@if [ ! -f rtc-pcf85063.service ]; then \
-		wget -O rtc-pcf85063.service https://raw.githubusercontent.com/dresden-elektronik/raspbee2-rtc/master/rtc-pcf85063.service?token=AC4SYY43WXO6RAOLUWKD2E25TQZ2M || (echo "could not download rtc service file"; exit 1); \
-	fi
+	raspi-config nonint do_i2c 0
 	@echo "moving rtc service..."
 	@mv rtc-pcf85063.service /lib/systemd/system/rtc-pcf85063.service
 	@systemctl daemon-reload
