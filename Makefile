@@ -44,6 +44,4 @@ install:
 	@systemctl start rtc-pcf85063.service
 	@echo "enabling rtc service..."
 	@systemctl enable rtc-pcf85063.service
-	@echo "setting rtc time..."
-	hwclock --systohc
-	@echo "done"
+	@echo "Done - Please reboot your machine now"
