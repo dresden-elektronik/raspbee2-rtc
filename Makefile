@@ -38,7 +38,7 @@ install:
 	@echo "enabling i2c interface..."
 	raspi-config nonint do_i2c 0
 	@echo "moving rtc service..."
-	@mv rtc-pcf85063.service /lib/systemd/system/rtc-pcf85063.service
+	@cp rtc-pcf85063.service /lib/systemd/system/rtc-pcf85063.service
 	@systemctl daemon-reload
 	@echo "starting rtc service..."
 	@systemctl start rtc-pcf85063.service
