@@ -21,7 +21,7 @@ Raspbian Stretch or Buster
 2. Download installation archive
 
         curl -O -L https://github.com/dresden-elektronik/raspbee2-rtc/archive/master.zip
-        unzip raspbee2-rtc-master.zip
+        unzip master.zip
 
 3. Change into extracted directory
 
