@@ -6,26 +6,35 @@ KBUILD = /lib/modules/$(KVERSION)/build
 UID = $$(id -u)
 PACKAGES = i2c-tools build-essential raspberrypi-kernel-headers
 KVERSION_SHORT = $(shell uname -r | cut -d'.' -f1,2)
+RTC_SRC = rtc-pcf85063.c
 
-all:
-	@echo "check dependencies..."
-	@for p in $(PACKAGES); do \
-		echo "$$p"; \
-		dpkg -s "$$p" | grep Status; \
-		if [ "$$?" != 0 ]; then \
-			echo "please install missing package via apt install $$p"; \
-	                exit 1; \
-        	fi \
-	done
-	@echo "download rtc source..."
-	@if [ ! -f rtc-pcf85063.c ]; then \
-		wget https://raw.githubusercontent.com/torvalds/linux/v${KVERSION_SHORT}/drivers/rtc/rtc-pcf85063.c || (echo "could not download rtc source file"; exit 1); \
-	fi
-	@echo "build rtc module..."
-	@make -C $(KBUILD) M=$(PWD) modules || (echo "Error building rtc module"; exit 1)
+.PHONY: all
+all: check-packages build
+	$(info rtc module successfully build, you may run 'sudo make install' now)
+
+build: $(RTC_SRC)
+	$(info build rtc module...)
+	$(MAKE) -C $(KBUILD) M=$(PWD) modules
 clean:
-	make -C $(KBUILD) M=$(PWD) clean
-	-rm -f rtc-pcf85063.c
+	$(MAKE) -C $(KBUILD) M=$(PWD) clean
+	-rm -f *.[oc]
+
+.PHONY: $(PACKAGES)
+.PHONY: check-packages
+check-packages: $(PACKAGES)
+	$(info checking deb package dependencies...)
+	@for p in $^; do \
+		echo "$$p"; \
+		dpkg -s "$$p" 2> /dev/null | grep -q Status; \
+		if [ "$$?" != 0 ]; then \
+			echo "package $$p not installed, please install via: apt-get install $$p"; \
+			exit 1; \
+		fi \
+	done
+
+$(RTC_SRC):
+	$(info download $@ for kernel version $(KVERSION_SHORT) ...)
+	curl -O --max-time 10 https://raw.githubusercontent.com/torvalds/linux/v$(KVERSION_SHORT)/drivers/rtc/$@
 
 install:
 	@if [ "$$(id -u)" != 0 ]; then \
@@ -33,20 +42,17 @@ install:
 		exit 1; \
 	fi
 
-	@echo "install rtc module..."
-	@make -C $(KBUILD) M=$(PWD) INSTALL_MOD_PATH=$(INSTALL_ROOT) modules_install || (echo "could not install rtc module file (have you done make?)"; exit 1)
-	depmod -A
-	@echo disable fake-hwclock
-	@systemctl disable fake-hwclock
+	$(info install rtc module...)
+	$(MAKE) -C $(KBUILD) M=$(PWD) INSTALL_MOD_PATH=$(INSTALL_ROOT) modules_install || (echo "could not install rtc module file (did you run make?)"; exit 1)
+	@depmod -A
+	systemctl disable fake-hwclock
 	@echo "enable rtc module..."
-	@echo "rtc_pcf85063" | sudo tee /usr/lib/modules-load.d/rtc_pcf85063.conf
+	@echo "rtc_pcf85063" | tee /usr/lib/modules-load.d/rtc_pcf85063.conf
 	@echo "enable i2c interface..."
 	raspi-config nonint do_i2c 0
 	@echo "install rtc service..."
 	@cp rtc-pcf85063.service /lib/systemd/system/rtc-pcf85063.service
 	@systemctl daemon-reload
-	@echo "start rtc service..."
-	@systemctl start rtc-pcf85063.service
-	@echo "enable rtc service..."
-	@systemctl enable rtc-pcf85063.service
+	systemctl start rtc-pcf85063.service
+	systemctl enable rtc-pcf85063.service
 	@echo "Done - Please reboot your machine now"
