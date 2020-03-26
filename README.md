@@ -13,9 +13,14 @@ Raspbian Stretch or Buster
 
 ## Install
 
+0. Update Raspberry Pi and Reboot
+        
+        sudo apt update
+        sudo apt upgrade
+        reboot
+
 1. Install dependencies
 
-        sudo apt update
         sudo apt install i2c-tools build-essential raspberrypi-kernel-headers
 
 2. Download installation archive
