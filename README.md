@@ -60,7 +60,17 @@ Raspbian Stretch or Buster
     Time since last adjustment is 1583502921 seconds
     Calculated Hardware Clock drift is 0.000000 seconds
     2020-03-06 14:55:20.017097+01:00</code></pre>
-
+    
+       timedatectl
+       
+    <pre><code>Local time: Fri 2020-04-03 12:42:20 CEST
+           Universal time: Fri 2020-04-03 10:42:20 UTC
+                 RTC time: Fri 2020-04-03 10:41:56
+                Time zone: Europe/Berlin (CEST, +0200)
+           System clock synchronized: no
+              NTP service: inactive
+          RTC in local TZ: no</code></pre>
+          
 ## Troubelshooting
 If something went wrong during install please consider following error sources:
 
@@ -76,7 +86,7 @@ If something went wrong during install please consider following error sources:
 
  Read the RTC time:
  \
-   <code>sudo hwclock</code>
+   <code>sudo hwclock -r</code>
 
 
  For more information see: https://linux.die.net/man/8/hwclock
