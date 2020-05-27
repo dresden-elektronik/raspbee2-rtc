@@ -43,7 +43,7 @@ install:
 	fi
 
 	$(info install rtc module...)
-	$(MAKE) -C $(KBUILD) M=$(PWD) INSTALL_MOD_PATH=$(INSTALL_ROOT) modules_install || (echo "could not install rtc module file (did you run make?)"; exit 1)
+	@$(MAKE) -C $(KBUILD) M=$(PWD) INSTALL_MOD_PATH=$(INSTALL_ROOT) modules_install || (echo "could not install rtc module file (did you run make?)"; exit 1)
 	@depmod -A
 	systemctl disable fake-hwclock
 	@echo "enable rtc module..."
