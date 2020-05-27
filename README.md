@@ -71,8 +71,8 @@ Raspbian Stretch or Buster
               NTP service: inactive
           RTC in local TZ: no</code></pre>
           
-## Troubelshooting
-If something went wrong during install please consider following error sources:
+## Troubleshooting
+If something went wrong during install please consider the following error sources:
 
 - Install dependencies
 - Execute make without sudo
