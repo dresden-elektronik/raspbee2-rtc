@@ -7,6 +7,7 @@ This repository provides a Makefile which downloads, builds and installs the RTC
 ### Hardware
 * Raspberry Pi 1, 2B, 3B, 3B+ or 4B
 * [RaspBee II](https://phoscon.de/raspbee2) Zigbee shield
+* FW version 26610700 or higher (http://deconz.dresden-elektronik.de/deconz-firmware/deCONZ_RaspBeeII_0x26610700.bin.GCF)
 
 ### Supported platforms
 Raspbian Stretch or Buster
