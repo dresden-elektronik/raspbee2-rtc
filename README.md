@@ -79,6 +79,13 @@ If something went wrong during install please consider the following error sourc
 - Execute make without sudo
 - Execute make install with sudo
 - If behind a proxy make sure it is correctly configured
+
+If you get Error Message like
+<pre><code>make -C /lib/modules/6.1.21-v8+/build M=/home/openhabian/raspbee2-rtc-master modules
+        make[1]: *** /lib/modules/6.1.21-v8+/build: File or directory not found.  Exit.
+        make: *** [Makefile:17: build] Error 2</code></pre>
+
+- try adding "arm_64bit=0" to config.txt, reboot and try again
  
  ## Use the RTC
  Set RTC time to system time:
