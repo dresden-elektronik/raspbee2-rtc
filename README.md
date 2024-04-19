@@ -1,7 +1,7 @@
 # RaspBee II RTC
 RTC kernel module builder for RaspBee II
 
-This repository provides a Makefile which downloads, builds and installs the RTC kernel module needed for the RaspBee II Zigbee shield for Raspberry Pi.
+This repository provides a Makefile which downloads, builds and installs the RTC kernel module for the RaspBee II Zigbee shield for Raspberry Pi.
 
 The RTC is *not mandatory* for the use of the RaspBee II as a ZigBee coordinator.
 
