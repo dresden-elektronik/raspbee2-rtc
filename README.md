@@ -90,7 +90,11 @@ If you get Error Message like
         make[1]: *** /lib/modules/6.1.21-v8+/build: File or directory not found.  Exit.
         make: *** [Makefile:17: build] Error 2</code></pre>
 
-- try adding "arm_64bit=0" to config.txt, reboot and try again
+- try adding "arm_64bit=0" to config.txt, (disables 64bit) reboot and try again
+- or link your kernel version lib/modules directory to existing kernel header directory in /usr/src
+  
+<pre><code>ls -l /usr/src
+sudo ln -s /usr/src/linux-headers-6.6.20+rpt-rpi-v7l /lib/modules/$(uname -r)/build</code></pre>
  
  ## Use the RTC
  Set RTC time to system time:
