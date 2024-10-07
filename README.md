@@ -10,12 +10,22 @@ In this case you can repeat the build in a few days. Or get your kernel version 
 
 ## Dependencies
 ### Hardware
-* Raspberry Pi 1, 2B, 3B, 3B+ or 4B
+* Raspberry Pi 1, 2B, 3B, 3B+ or 4B, 5
 * [RaspBee II](https://phoscon.de/raspbee2) Zigbee shield
 * FW version 26610700 or higher (http://deconz.dresden-elektronik.de/deconz-firmware/deCONZ_RaspBeeII_0x26610700.bin.GCF)
 
+### Additional Notes for Raspberry Pi 5 and Home Assistant
+#### Raspberry Pi 5
+add following to your config.txt
+* enable_uart=1
+* dtparam=uart0_console
+* dtoverlay=uart0
+
+#### Home Assistant
+* use the Port ttyAMA0 even if it says ttyAMA10  
+
 ### Supported platforms
-Raspbian Stretch or Buster
+Raspbian Stretch, Buster, Bullseye and expectedly later versions
 
 ## Install
 
