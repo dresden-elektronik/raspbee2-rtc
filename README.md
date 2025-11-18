@@ -46,7 +46,7 @@ Raspbian Stretch, Buster, Bullseye and expectedly later versions
    On Raspberry Pi OS **Trixie or newer**:
    
    The package linux-headers-rpi-xx usually is already installed. If not you have to install the correct version.
-   You can check the version you need with. It prints the correct suffix of the package that you need.
+   You can check the version you need with uname -a. It prints the correct suffix of the package that you need.
 
            uname -a
    
