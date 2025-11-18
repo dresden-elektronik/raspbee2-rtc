@@ -37,35 +37,68 @@ Raspbian Stretch, Buster, Bullseye and expectedly later versions
 
 1. Install dependencies
 
-        sudo apt install i2c-tools build-essential raspberrypi-kernel-headers
+        sudo apt install i2c-tools build-essential
+   
+   On Raspberry Pi OS **older than Trixie**:
+   
+        sudo apt install raspberrypi-kernel-headers
+   
+   On Raspberry Pi OS **Trixie or newer**:
+   
+   The package linux-headers-rpi-xx usually is already installed. If not you have to install the correct version.
+   You can check the version you need with. It prints the correct suffix of the package that you need.
 
-2. Download installation archive
+           uname -a
+   
+   usually it is:
+   
+   RPI 1/zero:
+   
+           sudo apt install linux-headers-rpi-v6
+   
+   RPI 2:
+   
+           sudo apt install linux-headers-rpi-v7
+   
+   RPI 3, 4, zero2:
+   
+           sudo apt install linux-headers-rpi-v7l
+   
+   64Bit RPI 3, 4, 5:
+   
+           sudo apt install linux-headers-rpi-v8
+
+3. Download installation archive
 
         curl -O -L https://github.com/dresden-elektronik/raspbee2-rtc/archive/master.zip
         unzip master.zip
 
-3. Change into extracted directory
+4. Change into extracted directory
 
         cd raspbee2-rtc-master
 
-4. Compile RTC kernel module
+5. Compile RTC kernel module
 
         make
 
-5. Install RTC kernel module
+6. Install RTC kernel module
 
         sudo make install
 
-6. Reboot Raspberry Pi
+7. Reboot Raspberry Pi
 
         sudo reboot
 
-7. Configure system time to RTC module
+8. Configure system time to RTC module
+
+   Only on Raspberry Pi OS **older than Trixie**:
 
         sudo hwclock --systohc
 
-8. Test that RTC is working
-
+10. Test that RTC is working
+    
+     On Raspberry Pi OS **older than Trixie**:
+   
         sudo hwclock --verbose
 
 
@@ -77,7 +110,7 @@ Raspbian Stretch, Buster, Bullseye and expectedly later versions
     Calculated Hardware Clock drift is 0.000000 seconds
     2020-03-06 14:55:20.017097+01:00</code></pre>
     
-       timedatectl
+            timedatectl
        
     <pre><code>Local time: Fri 2020-04-03 12:42:20 CEST
            Universal time: Fri 2020-04-03 10:42:20 UTC
@@ -86,6 +119,12 @@ Raspbian Stretch, Buster, Bullseye and expectedly later versions
            System clock synchronized: no
               NTP service: inactive
           RTC in local TZ: no</code></pre>
+
+   On Raspberry Pi OS **Trixie or newer**:
+   
+   timedatectl automatically configures the RTC time. hwclock does not exist anymore. You can check RTC time with:
+   
+           timedatectl
           
 ## Troubleshooting
 If something went wrong during install please consider the following error sources:
@@ -100,20 +139,13 @@ If you get Error Message like
         make[1]: *** /lib/modules/6.1.21-v8+/build: File or directory not found.  Exit.
         make: *** [Makefile:17: build] Error 2</code></pre>
 
+- Usually this means the kernel-headers are not up to date and do not match with your installed kernel version. In that case you can wait some time and try to update and install kernel-headers again
+  (The RaspBeeII also works as a ZigBee Gateway withoud installed RTC)
+- Or you try some hacks (not recommended):
+
 - try adding "arm_64bit=0" to config.txt, (disables 64bit) reboot and try again
 - or link your kernel version lib/modules directory to existing kernel header directory in /usr/src
   
 <pre><code>ls -l /usr/src
 sudo ln -s /usr/src/linux-headers-6.6.20+rpt-rpi-v7l /lib/modules/$(uname -r)/build</code></pre>
  
- ## Use the RTC
- Set RTC time to system time:
- \
-   <code>sudo hwclock --systohc</code>
-
- Read the RTC time:
- \
-   <code>sudo hwclock -r</code>
-
-
- For more information see: https://linux.die.net/man/8/hwclock
