@@ -25,7 +25,7 @@ add following to your config.txt
 * use the Port ttyAMA0 even if it says ttyAMA10  
 
 ### Supported platforms
-Raspbian Stretch, Buster, Bullseye and expectedly later versions
+Raspbian Stretch, Buster, Bullseye, Bookworm, Trixie
 
 ## Install
 
